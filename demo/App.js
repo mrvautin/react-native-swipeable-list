@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,7 +9,7 @@ import {
   Alert,
 } from 'react-native';
 
-import SwipeableFlatList from 'react-native-swipeable-list';
+import SwipeableFlatList from './Swipeable/SwipeableFlatList';
 
 import {dummyData} from './data/dummyData';
 
@@ -32,7 +32,7 @@ const extractItemKey = item => {
   return item.id.toString();
 };
 
-const Item = ({item, backgroundColor, textColor, deleteItem}) => {
+const Item = ({item}) => {
   return (
     <>
       <View style={styles.item}>
@@ -60,6 +60,8 @@ function renderItemSeparator() {
 
 const App = () => {
   const [data, setData] = useState(dummyData);
+  this.child = React.createRef();
+  console.log('child', this.child.current);
 
   const deleteItem = itemId => {
     // ! Please don't do something like this in production. Use proper state management.
@@ -80,7 +82,10 @@ const App = () => {
         },
         {
           text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
+          onPress: () => {
+            console.log('cancelled');
+            this.child.current.close();
+          },
           style: 'cancel',
         },
       ],
@@ -99,7 +104,10 @@ const App = () => {
         },
         {
           text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
+          onPress: () => {
+            console.log('cancelled');
+            this.child.current.close();
+          },
           style: 'cancel',
         },
       ],
@@ -136,6 +144,7 @@ const App = () => {
           <Text style={styles.headerText}>Inbox</Text>
         </View>
         <SwipeableFlatList
+          ref={this.child}
           keyExtractor={extractItemKey}
           data={data}
           renderItem={({item}) => (

@@ -6,6 +6,8 @@ npm-debug.log
 tmp
 build
 dist
+demo/android
+demo/ios
 
 # Dependency directory
 node_modules
