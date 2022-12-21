@@ -68,13 +68,9 @@ class SwipeableFlatList extends React.Component {
       openRowKey: null,
     };
 
-    this._shouldBounceFirstRowOnMount = this.props.bounceFirstRowOnMount;
-  }
+    props.closeMenu.current = this.close;
 
-  close() {
-    this.setState({
-      openRowKey: null,
-    });
+    this._shouldBounceFirstRowOnMount = this.props.bounceFirstRowOnMount;
   }
 
   render() {
@@ -90,6 +86,13 @@ class SwipeableFlatList extends React.Component {
       />
     );
   }
+
+  close = () => {
+    console.log('test');
+    this.setState({
+      openRowKey: null,
+    });
+  };
 
   _onScroll = e => {
     // Close any opens rows on ListView scroll

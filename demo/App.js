@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -59,9 +59,8 @@ function renderItemSeparator() {
 }
 
 const App = () => {
+  const closeMenu = React.useRef(null);
   const [data, setData] = useState(dummyData);
-  this.child = React.createRef();
-  console.log('child', this.child.current);
 
   const deleteItem = itemId => {
     // ! Please don't do something like this in production. Use proper state management.
@@ -84,7 +83,7 @@ const App = () => {
           text: 'Cancel',
           onPress: () => {
             console.log('cancelled');
-            this.child.current.close();
+            closeMenu.current();
           },
           style: 'cancel',
         },
@@ -106,7 +105,7 @@ const App = () => {
           text: 'Cancel',
           onPress: () => {
             console.log('cancelled');
-            this.child.current.close();
+            closeMenu.current();
           },
           style: 'cancel',
         },
@@ -144,6 +143,7 @@ const App = () => {
           <Text style={styles.headerText}>Inbox</Text>
         </View>
         <SwipeableFlatList
+          closeMenu={closeMenu}
           ref={this.child}
           keyExtractor={extractItemKey}
           data={data}
